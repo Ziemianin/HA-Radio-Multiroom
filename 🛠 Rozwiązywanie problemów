@@ -1,0 +1,5 @@
+Brak dźwięku na nowym tablecie: Sprawdź czy urządzenie jest zarejestrowane w Browser Mod.
+
+Opcje na liście się nie zmieniają: Zrób pełny restart Home Assistant lub odśwież pamięć podręczną przeglądarki (Ctrl+F5).
+
+Encja nieznaleziona: Upewnij się, że nazwy w skrypcie (media_player.xxx) są identyczne z nazwami encji w Twoim systemie.
