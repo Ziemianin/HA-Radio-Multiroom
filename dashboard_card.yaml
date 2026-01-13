@@ -1,0 +1,21 @@
+type: vertical-stack
+cards:
+  - type: entities
+    entities:
+      - entity: input_select.wybor_glosnika_radio
+        name: "Wybierz strefę:"
+  
+  # Sekcja przycisków
+  - type: grid
+    columns: 2
+    square: false
+    cards:
+      - type: button
+        name: MOJA STACJA
+        icon: mdi:radio
+        tap_action:
+          action: call-service
+          service: script.radio_multiroom_play
+          data:
+            # Tutaj wklejasz ID pobrane z atrybutów media_player
+            m_id: "media-source://radio_browser/TWOJE-ID-STACJI"
