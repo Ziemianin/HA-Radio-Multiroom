@@ -1,0 +1,59 @@
+type: vertical-stack
+cards:
+  - type: heading
+    heading: 📻 Radio Multiroom
+  
+  - type: entities
+    entities:
+      - entity: input_select.wybor_glosnika_radio
+        name: "Wybierz głośnik:"
+        icon: mdi:speaker-wireless
+
+  - type: media-control
+    entity: media_player.tablet
+    name: "Tablet Przenośny"
+
+  - type: media-control
+    entity: media_player.tablet_wall
+    name: "Tablet na ścianie"
+
+  - type: media-control
+    entity: media_player.salon
+    name: "Salon (TV)"
+
+  - type: grid
+    columns: 2
+    square: false
+    cards:
+      - type: button
+        name: RMF FM
+        icon: mdi:radio
+        tap_action:
+          action: call-service
+          service: script.radio_multiroom_play
+          data:
+            m_id: "media-source://radio_browser/47c5dd82-470a-11e9-aa55-52543be04c81"
+      - type: button
+        name: Radio ZET
+        icon: mdi:radio-tower
+        tap_action:
+          action: call-service
+          service: script.radio_multiroom_play
+          data:
+            m_id: "media-source://radio_browser/1c142460-76ad-4100-a9cb-a76eff76d821"
+      - type: button
+        name: Radio Eska
+        icon: mdi:music-box
+        tap_action:
+          action: call-service
+          service: script.radio_multiroom_play
+          data:
+            m_id: "media-source://radio_browser/3d5ae3c4-6d05-415b-a0eb-d21ca56be0ea"
+      - type: button
+        name: Bon Ton
+        icon: mdi:map-marker-radius
+        tap_action:
+          action: call-service
+          service: script.radio_multiroom_play
+          data:
+            m_id: "media-source://radio_browser/583c2e60-bc39-4b6b-8fbc-944e67c22d49"
