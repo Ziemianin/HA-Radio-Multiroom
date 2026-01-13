@@ -1,41 +1,42 @@
-# 📻 System Radio Multiroom dla Home Assistant
+# 📻 Home Assistant Radio Multiroom Package
 
-Kompletna instrukcja konfiguracji systemu radiowego z wyborem urządzenia wyjściowego (Multiroom) przy użyciu Browser Mod.
+Kompletny system radiowy dla Home Assistant z wyborem głośnika (Multiroom). 
 
-## ⚠️ Ważna informacja na start
-Aby zarejestrować nowe urządzenie (tablet, telefon, przeglądarka) w dodatku **Browser Mod**, musisz być zalogowany na tym urządzeniu jako **ADMINISTRATOR**. W przeciwnym razie przycisk "Register" może być niewidoczny.
-
----
-
-## 1️⃣ Krok 1: Pomocnik (Input Select)
-Stwórz pomocnika, który będzie przechowywał listę Twoich głośników.
-- **Typ:** Lista rozwijana (Dropdown)
-- **Nazwa:** `Wybór Głośnika Radio`
-- **ID encji:** `input_select.wybor_glosnika_radio`
-- **Opcje:**
-  - `Tablet`
-  - `Sciana`
-  - `Salon`
+## ⚙️ Wymagania wstępne
+1. **Radio Browser** – Upewnij się, że masz zainstalowaną integrację *Radio Browser* (standardowa w HA).
+2. **Browser Mod** – Wymagany do odtwarzania dźwięku na tabletach/przeglądarkach (instalacja przez HACS).
+3. **Uprawnienia** – Rejestracja nowego urządzenia w Browser Mod musi być wykonana przez **Administratora**.
 
 ---
 
-## 2️⃣ Krok 2: Skrypt (Logic)
-Skrypt sterujący, który sprawdza co wybrałeś na liście i wysyła tam strumień audio.
+## 🚀 Szybka Instalacja
 
-```yaml
-alias: "Radio Multiroom Play"
-sequence:
-  - action: media_player.play_media
-    target:
-      entity_id: >
-        {% if is_state('input_select.wybor_glosnika_radio', 'Tablet') %}
-          media_player.tablet
-        {% elif is_state('input_select.wybor_glosnika_radio', 'Sciana') %}
-          media_player.tablet_wall
-        {% else %}
-          media_player.salon
-        {% endif %}
-    data:
-      media_content_id: "{{ m_id }}"
-      media_content_type: audio/mpeg
-mode: single
+### 1. Skopiuj konfigurację (Logika)
+Skopiuj plik `radio_multiroom.yaml` do folderu `packages/` w Twoim Home Assistant. Stworzy to automatycznie:
+- Pomocnika (listę wyboru głośników)
+- Skrypt (logikę przekierowania dźwięku)
+
+### 2. Skopiuj interfejs (Karta)
+Wklej zawartość `dashboard_card.yaml` do nowej karty typu **Ręczny (Manual)** na swoim dashboardzie.
+
+---
+
+## 🎵 Jak dodać własne stacje radiowe?
+
+System korzysta z integracji **Radio Browser**. Aby dodać własną stację lub zmienić istniejące, wykonaj te kroki:
+
+1. Wejdź w HA w sekcję **Media** -> **Radio Browser**.
+2. Znajdź swoją ulubioną stację.
+3. Kliknij trzy kropki przy stacji i wybierz **Dodaj do ulubionych** lub po prostu ją uruchom.
+4. Aby pobrać dokładną ścieżkę (ID) stacji do kodu:
+   - Otwórz **Narzędzia deweloperskie** -> **Stany**.
+   - Znajdź odtwarzacz, na którym aktualnie gra radio (np. `media_player.tablet`).
+   - Skopiuj wartość atrybutu `media_content_id`. Będzie to wyglądać mniej więcej tak: 
+     `media-source://radio_browser/47c5dd82-470a-11e9-aa55-52543be04c81`
+5. Wklej ten link w kodzie karty (Dashboard) w sekcji `m_id:`.
+
+---
+
+## 🛠 Rozwiązywanie problemów
+- **Brak przycisku Register:** Zaloguj się na urządzeniu (tablecie) jako administrator.
+- **Radio nie gra:** Sprawdź w "Narzędziach deweloperskich", czy nazwy encji `media_player.tablet`, `media_player.tablet_wall` oraz `media_player.salon` są identyczne w Twoim systemie.
