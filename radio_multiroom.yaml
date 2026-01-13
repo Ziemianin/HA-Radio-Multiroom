@@ -1,0 +1,33 @@
+#################################################################
+# RADIO MULTIROOM SYSTEM - ALL IN ONE (Package)
+#################################################################
+
+# 1. Tworzy listę wyboru (Pomocnik)
+input_select:
+  wybor_glosnika_radio:
+    name: "Wybór Głośnika Radio"
+    options:
+      - "Tablet"
+      - "Sciana"
+      - "Salon"
+    icon: mdi:speaker-multiple
+
+# 2. Tworzy logikę (Skrypt)
+script:
+  radio_multiroom_play:
+    alias: "Radio Multiroom Play"
+    sequence:
+      - action: media_player.play_media
+        target:
+          entity_id: >
+            {% if is_state('input_select.wybor_glosnika_radio', 'Tablet') %}
+              media_player.tablet
+            {% elif is_state('input_select.wybor_glosnika_radio', 'Sciana') %}
+              media_player.tablet_wall
+            {% else %}
+              media_player.salon
+            {% endif %}
+        data:
+          media_content_id: "{{ m_id }}"
+          media_content_type: audio/mpeg
+    mode: single
